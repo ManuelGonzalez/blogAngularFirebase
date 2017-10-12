@@ -12,13 +12,24 @@
     </svg>
   </label>
   <div class="ae-container-fluid rk-topbar">
-    <h1 class="rk-logo"><a routerLink="/">{{iS.data.pagina}}<sup>tm</sup></a></h1>
+    <h1 class="rk-logo"><a routerLink="/">{{iS.data.pagina}}<sup *ngIf="(lg.userObs | async)?.uid"> {{lg.user.displayName}}</sup></a></h1>
     <nav class="rk-navigation">
       <ul class="rk-menu">
         <li class="rk-menu__item" routerLinkActive="active"><a routerLink="/home" class="rk-menu__link">Home</a>
         </li>
         <li class="rk-menu__item" routerLinkActive="active"><a routerLink="/dashboard" class="rk-menu__link">Dashboard</a>
         </li>
+        <li *ngIf="!(lg.userObs | async)?.uid" class="rk-menu__item"><a href="#0" class="rk-menu__link">SignIn</a>
+          <nav class="rk-menu__sub">
+            <ul class="rk-container">
+              <li class="rk-menu__item"><a href="" class="rk-menu__link" data-toggle="modal" data-target="#signInModal">SignIn</a></li>
+              <li class="rk-menu__item"><a href="documentation.html" class="rk-menu__link">signUp</a></li>
+            </ul>
+          </nav>
+        </li>
+        <li *ngIf="(lg.userObs | async)?.uid" class="rk-menu__item" routerLinkActive="active"><a href="" (click)="lg.logout()" class="rk-menu__link">SignOut</a>
+        </li>
+        <li><img style="border-radius: 50%; width:20px;" [src]="lg.user.photoURL" alt=""></li>
       </ul>
       <form class="rk-search">
         <input type="text" placeholder="Search" id="urku-search" class="rk-search-field">
@@ -31,3 +42,31 @@
     </nav>
   </div>
 </header>
+
+<!-- modal -->
+<div class="modal fade" tabindex="-1" id="signInModal" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">SignIn</h4>
+      </div>
+      <div class="modal-body">
+        <form class="form-signin">
+          <h2 class="form-signin-heading">Please sign in</h2>
+          <label for="email" class="sr-only">Email address</label>
+          <input #email type="email" id="email" class="form-control" placeholder="Email address" required="" autofocus="">
+          <label for="password" class="sr-only">Password</label>
+          <input #password type="password" id="password" class="form-control" placeholder="Password" required="" required="">
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" value="remember-me"> Remember me
+            </label>
+          </div>
+          <button class="btn btn-lg btn-default btn-block" type="submit">Login</button>
+          <button class="btn btn-lg btn-primary btn-block" data-dismiss="modal" aria-label="Close" (click)="lg.loginFacebook()">Login with Facebook</button>
+        </form>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
