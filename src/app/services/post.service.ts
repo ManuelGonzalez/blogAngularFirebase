@@ -12,6 +12,7 @@ export class PostService {
   posts:any[];
   aux:number=25;
   end: BehaviorSubject<number|null>;
+  cargando:boolean=true;
 
   constructor(db: AngularFireDatabase) {
     this.end = new BehaviorSubject(this.aux);
@@ -25,20 +26,18 @@ export class PostService {
     (posts=> {
       if (posts) {
         this.posts = posts;
+        this.cargando=false;
       }
     });
   }
   paginations() {
     console.log(this.aux);
     this.end.next(this.aux);
+    this.getListPost();
   }
   next(){
+    this.cargando=true;
     this.aux=this.aux+25;
     this.paginations();
   }
-  back(){
-    this.aux=this.aux-25;
-    this.paginations();
-  }
-
 }
