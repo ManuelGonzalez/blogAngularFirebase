@@ -10,6 +10,7 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 
 import { InformacionService } from './services/informacion.service';
 import { LoginService } from './services/login.service';
+import { PostService } from './services/post.service';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
@@ -84,7 +85,7 @@ const environment = {
     AngularFireDatabaseModule,
     AngularFireAuthModule,
   ],
-  providers: [InformacionService,LoginService],
+  providers: [InformacionService,LoginService,PostService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

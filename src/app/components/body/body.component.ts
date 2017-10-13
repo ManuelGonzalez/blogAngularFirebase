@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { InformacionService } from '../../services/informacion.service';
+import { PostService } from '../../services/post.service';
 
 @Component({
   selector: 'app-body',
@@ -7,7 +8,9 @@ import { InformacionService } from '../../services/informacion.service';
 })
 export class BodyComponent implements OnInit {
 
-  constructor(public iS:InformacionService) { }
+  constructor(public iS:InformacionService, public ps:PostService) {
+    ps.getListPost();
+  }
 
   ngOnInit() {
   }
